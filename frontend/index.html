@@ -24,10 +24,6 @@
         <h2>Export</h2>
         <button id="generateBtn" class="primary" type="button">Generate Package</button>
         <button id="downloadProjectCsvBtn" type="button">Project Queue CSV</button>
-        <button id="downloadFirstCsvBtn" type="button">Legacy CSV ภาพนิ่ง</button>
-        <button id="downloadMotionCsvBtn" type="button">Legacy CSV Motion</button>
-        <button id="downloadAllJsonBtn" type="button">Project JSON</button>
-        <button id="downloadMdBtn" type="button">Readable MD</button>
       </section>
     </aside>
 
@@ -67,15 +63,6 @@
           <label class="upload">ชุด / เสื้อผ้า<input id="outfitRefs" type="file" accept="image/*" multiple><div id="outfitPreview" class="preview"></div></label>
           <label class="upload">สไตล์ / ฉาก<input id="styleRefs" type="file" accept="image/*" multiple><div id="stylePreview" class="preview"></div></label>
         </div>
-        <details>
-          <summary>Path สำหรับ Prompt Sender แบบเดิม</summary>
-          <div class="grid2 pathgrid">
-            <label>สินค้า paths<textarea id="productPaths" placeholder="C:\\refs\\product.png"></textarea></label>
-            <label>คน paths<textarea id="facePaths" placeholder="C:\\refs\\model.png"></textarea></label>
-            <label>ชุด paths<textarea id="outfitPaths" placeholder="C:\\refs\\outfit.png"></textarea></label>
-            <label>ฉาก paths<textarea id="stylePaths" placeholder="C:\\refs\\scene.png"></textarea></label>
-          </div>
-        </details>
       </section>
 
       <section class="panel analysis-panel"><h2>ผลวิเคราะห์สินค้า</h2><div id="analysisBox" class="analysis-box"></div></section>

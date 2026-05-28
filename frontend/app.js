@@ -89,7 +89,7 @@ function inferPain(detail, category){
   if (category.includes("อาหาร")) return "ลูกค้ากังวลเรื่องรสชาติ ความสดใหม่ ขนาดจริง และความน่ากิน";
   return "ลูกค้ากังวลว่าสินค้าจะไม่ตรงปก ใช้งานยาก หรือไม่เห็นประโยชน์จริง";
 }
-function attachmentsForStill(){ return [...lines($("productPaths").value), ...lines($("facePaths").value), ...lines($("outfitPaths").value), ...lines($("stylePaths").value)]; }
+function attachmentsForStill(){ return []; }
 function refNames(kind){ return refs[kind].map(x=>x.name).join("|"); }
 function refSummary(){ return Object.entries(refs).map(([k,v])=> v.length ? `${k}:${v.map(x=>x.name).join("|")}` : "").filter(Boolean).join(", ") || "ไม่มีไฟล์ preview"; }
 function corePromptKeywords(){ return "realistic commercial review, high detail, sharp focus, natural skin texture, clean composition, premium product detail, soft natural light, cinematic but believable, no text, no subtitle, no watermark"; }
@@ -191,10 +191,6 @@ function syncCustomInputs(){
 ["customCategory","customScene","productName","productDetail"].forEach(id=>$(id).addEventListener("input",()=>renderPackage(buildPackage())));
 $("generateBtn").addEventListener("click",()=>renderPackage(buildPackage()));
 $("downloadProjectCsvBtn").addEventListener("click",()=>download("project_queue.csv", csv(projectRows(ensure())), "text/csv;charset=utf-8"));
-$("downloadFirstCsvBtn").addEventListener("click",()=>download("first_frame_queue.csv", csv(stillRows(ensure())), "text/csv;charset=utf-8"));
-$("downloadMotionCsvBtn").addEventListener("click",()=>download("motion_queue.csv", csv(motionRows(ensure())), "text/csv;charset=utf-8"));
-$("downloadAllJsonBtn").addEventListener("click",()=>download("product-review-project.json", JSON.stringify(ensure(), null, 2), "application/json;charset=utf-8"));
-$("downloadMdBtn").addEventListener("click",()=>download("product-review-package.md", markdown(ensure()), "text/markdown;charset=utf-8"));
 $("shotList").addEventListener("input", e=>{ if(!currentPackage || !e.target.matches("textarea[data-field]")) return; currentPackage.shots[Number(e.target.dataset.index)][e.target.dataset.field] = e.target.value; });
 $("shotList").addEventListener("click", async e=>{ const b=e.target.closest("button[data-copy]"); if(!b) return; const s=ensure().shots[Number(b.dataset.index)]; await navigator.clipboard.writeText(b.dataset.copy==="still" ? s.stillPrompt : s.motionPrompt); $("statusPill").textContent="คัดลอกแล้ว"; setTimeout(()=>$("statusPill").textContent=`${ensure().shots.length} ช็อตพร้อม export`,900); });
 syncCustomInputs();
