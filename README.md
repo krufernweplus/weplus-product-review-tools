@@ -1,36 +1,18 @@
-# WePlus Product Review Auto-Gen
+# WePlus Product Review Auto-Gen v11-stabilized
 
-MVP v4 สำหรับ workflow:
+Two-part workflow for product review prompt generation and supervised local sending.
 
-1. Product Review Prompt Studio สร้าง prompt + CSV
-2. Prompt Sender import CSV แล้วช่วยแนบรูป วาง prompt และกด Enter
-3. แพลตฟอร์มปลายทาง เช่น GPT Image / FLOW / Grok เป็นคนเจนภาพหรือวิดีโอเอง
+## Tools
+- `frontend/`: Product Review Prompt Studio for generating one Project Queue CSV.
+- `prompt-sender/`: local Windows helper for sending still or motion prompts into external platforms.
 
-## โครงสร้าง
+## v11 stabilization
+- Still phase sends either global refs or per-row refs, never both.
+- Global refs are session-level. Add Product / Face / Outfit / Style once, then still jobs use them automatically.
+- Apply All / Apply Selected were removed from the main Global Refs workflow.
+- Motion phase uses `first_frame_path` first, with old row attachments only as a legacy fallback.
+- Replace Project CSV clears old global refs to avoid carrying images into a new project.
+- Stop is handled as a normal user action without a worker traceback.
+- Logs exact final attachment count before sending.
 
-```txt
-frontend/        เว็บ Product Review Prompt Studio สำหรับ deploy บน Netlify
-prompt-sender/   โปรแกรม Python local desktop helper สำหรับเครื่อง user
-docs/            เอกสาร architecture
-```
-
-## Deploy
-
-- Deploy เฉพาะ `frontend/` ไป Netlify
-- `prompt-sender/` ไม่ต้อง deploy ใช้บนเครื่อง Windows ของ user
-- GitHub ใช้เก็บ source code และทำ release/download
-
-## MVP นี้ตัดออกแล้ว
-
-- ไม่มี Image API
-- ไม่มี API key ใน frontend
-- ไม่มี backend/Railway ใน MVP
-
-Railway จะใช้ภายหลังเมื่อทำ login, subscription verification, project history หรือ quota
-
-
-## Update v4
-- Removed the visible API note from the sidebar.
-- Added category: ช่องปาก / ยาสีฟัน.
-- Added custom category and custom scene fields.
-- Auto category/scene is rule-based inside the browser, not API-based.
+See `docs/WORKFLOW.md`, `docs/PROMPT_SENDER.md`, and `docs/PROJECT_QUEUE_TEMPLATE.md`.

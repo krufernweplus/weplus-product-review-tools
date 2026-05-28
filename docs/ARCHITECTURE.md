@@ -1,55 +1,57 @@
-# Architecture MVP v3
+# Architecture
 
 ## Production Flow
 
 ```txt
 Wix / Sales Page / Subscription
-        ↓
+        |
 Netlify: Product Review Prompt Studio
-        ↓ CSV
+        |
+        | Project Queue CSV / Excel
+        |
 User Windows PC: WePlus Prompt Sender
-        ↓
+        |
 GPT Image / FLOW / Grok / Kling / Runway
 ```
 
 ## GitHub
 
-เก็บ source code ทั้งหมด:
-- frontend app
-- prompt sender source
-- docs
-- release package
+GitHub stores source code, docs, and release-ready local helper files.
 
 ## Netlify
 
-ใช้ deploy เฉพาะ `frontend/` เพราะเป็น static app สำหรับสร้าง prompt และ export CSV
+Deploy only `frontend/` because it is a browser-based static app for generating prompts and exporting a Project Queue.
+
+Recommended Netlify settings:
+
+```txt
+Base directory: frontend
+Build command: none
+Publish directory: frontend
+```
 
 ## Prompt Sender
 
-เป็น Python local desktop app ไม่ต้อง deploy เพราะต้องใช้:
-- local file path
+`prompt-sender/` is a local Windows desktop app. It should not be deployed because it needs:
+
+- local file paths
 - Windows clipboard file paste
-- mouse click point
+- mouse click positions
 - keyboard Enter
-- timing/delay เฉพาะเครื่อง user
+- local timing and delay behavior
 
 ## Railway
 
-ยังไม่ใช้ใน MVP นี้
-ใช้ภายหลังเมื่อมี:
-- user login
-- subscription check จาก Wix
-- database/project history
-- quota/credit
-- server-side AI API
+Railway is not needed for the MVP. It may be useful later for login, Wix subscription verification, user project history, quota, or server-side AI API calls.
 
-## CSV Schema
+## Project Queue Schema
 
-```csv
-profile,job_type,shot_id,prompt,attachments,delay_sec,status,output_name
+The current workflow uses one Project Queue file:
+
+```txt
+1 row = 1 shot
+still_prompt = first-frame image prompt
+motion_prompt = image-to-video prompt
 ```
 
-- `profile`: GPT Image / FLOW / Grok / Custom
-- `job_type`: first_frame / motion
-- `attachments`: local paths คั่นด้วย `|`
-- `status`: pending / sending / sent / failed
+See `docs/PROJECT_QUEUE_TEMPLATE.md` for the full column list.

@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+*.autosave.csv
+prompt-sender/sender-debug.log
+prompt-sender/sender_profiles.json

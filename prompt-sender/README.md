@@ -1,51 +1,59 @@
 # WePlus Prompt Sender
 
-โปรแกรมนี้เป็น **local desktop helper** สำหรับ Windows ไม่ต้อง deploy ขึ้น Netlify/Railway
+Local Windows desktop helper for supervised prompt sending. This app is not deployed to Netlify or Railway because it controls local file paths, the clipboard, mouse clicks, keyboard actions, and Windows file-paste behavior.
 
-หน้าที่:
-- import CSV/Excel จาก Product Review Prompt Studio
-- แนบรูปจาก `attachments`
-- วาง prompt
-- กด Enter
-- รอ delay ระหว่างงาน
-- จำพฤติกรรมคลิ๊กเป็น Profile เช่น GPT Image / FLOW / Grok
+## Install
+Double-click `install.bat`.
 
-## ติดตั้ง
+## Open
+Double-click `Open WePlus Prompt Sender.cmd`.
 
-ดับเบิลคลิก `install.bat`
+## Supported Queue
+Use one Project Queue CSV or Excel file:
 
-## เปิดโปรแกรม
-
-ดับเบิลคลิก `Open WePlus Prompt Sender.cmd`
-
-## CSV ที่รองรับ
-
-แนะนำ:
-
-```csv
-profile,job_type,shot_id,prompt,attachments,delay_sec,status,output_name
-GPT Image,first_frame,SHOT_01_FIRST,"prompt...","C:\refs\product.png|C:\refs\model.png",150,pending,SHOT_01_FIRST.png
-FLOW,motion,SHOT_01_MOTION,"motion prompt...","C:\outputs\SHOT_01_FIRST.png",420,pending,SHOT_01_MOTION.mp4
+```txt
+1 row = 1 shot
+still_prompt = first-frame image prompt
+motion_prompt = image-to-video prompt
 ```
 
-ยังรองรับ format เดิม:
+Key columns:
 
-```csv
-shot_id,prompt,attachments,delay_sec,status
+```txt
+enabled
+shot_id
+profile_still
+profile_motion
+still_prompt
+motion_prompt
+attachments
+first_frame_path
+still_delay_sec
+motion_delay_sec
+still_status
+motion_status
 ```
 
-## วิธีใช้
+Legacy `profile,job_type,shot_id,prompt,attachments,delay_sec,status,output_name` CSV files are still imported.
 
-1. เปิด GPT / FLOW / Grok ใน browser
-2. เลือก Profile ให้ตรงแพลตฟอร์ม
-3. กด Set Point แล้วชี้เมาส์ที่ช่อง prompt/composer
-4. Import CSV
-5. กด Test Paste Prompt ก่อน
-6. กด Start และเฝ้าหน้าจอระหว่างทำงาน
+## Global Refs
+Use `Add Product`, `Add Face`, `Add Outfit`, and `Add Style` once per project. Global refs automatically apply to all still jobs at send time and are not copied into queue rows.
 
-## หมายเหตุ
+Still phase:
 
-- โปรแกรมนี้ควรใช้แบบ supervised ไม่ควรปล่อยทิ้งยาว
-- ถ้าเปลี่ยนแพลตฟอร์มหรือย้ายตำแหน่งหน้าจอ ให้ Set Point ใหม่
-- Profile ถูกบันทึกใน `sender_profiles.json`
-- สถานะ queue จะ autosave กลับลงไฟล์ CSV ที่ import ถ้าเปิด Autosave status
+```txt
+if global refs exist:
+    use global refs only
+else:
+    use row attachments
+```
+
+Motion phase:
+
+```txt
+use first_frame_path first
+fallback to legacy row attachments only when first_frame_path is empty
+```
+
+## Stop
+Stop is treated as a normal user action. Pressing Stop during countdown, file gap, upload wait, or delay exits cleanly without a traceback.

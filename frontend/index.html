@@ -10,52 +10,57 @@
 <body>
   <main class="shell">
     <aside class="sidebar">
-      <div class="brand"><div class="mark">W</div><div><h1>Product Review Auto‑Gen</h1><p>สร้าง Prompt + CSV สำหรับ Prompt Sender</p></div></div>
+      <div class="brand"><div class="mark">W</div><div><h1>Product Review Auto‑Gen</h1><p>สร้าง Prompt + Project Queue สำหรับ Prompt Sender</p></div></div>
       <section class="panel dark">
         <h2>Workflow</h2>
         <ol class="steps">
           <li>กรอกสินค้าแบบสั้น</li>
-          <li>อัปโหลด REF เพื่อ preview</li>
-          <li>เลือกฉาก / แพลตฟอร์ม</li>
-          <li>Export CSV ไป Prompt Sender</li>
+          <li>เลือกฉาก / สไตล์ / profile</li>
+          <li>Export Project Queue ไฟล์เดียว</li>
+          <li>Prompt Sender เลือก Still หรือ Motion phase</li>
         </ol>
       </section>
       <section class="panel dark">
         <h2>Export</h2>
         <button id="generateBtn" class="primary" type="button">Generate Package</button>
-        <button id="downloadFirstCsvBtn" type="button">CSV สร้างภาพนิ่ง</button>
-        <button id="downloadMotionCsvBtn" type="button">CSV Motion / FLOW</button>
+        <button id="downloadProjectCsvBtn" type="button">Project Queue CSV</button>
+        <button id="downloadFirstCsvBtn" type="button">Legacy CSV ภาพนิ่ง</button>
+        <button id="downloadMotionCsvBtn" type="button">Legacy CSV Motion</button>
         <button id="downloadAllJsonBtn" type="button">Project JSON</button>
         <button id="downloadMdBtn" type="button">Readable MD</button>
       </section>
     </aside>
 
     <section class="workspace">
-      <header class="topbar"><div><h2>AI Review Prompt Builder</h2><p>กรอกน้อยที่สุด ให้ระบบวิเคราะห์สินค้าและสร้าง prompt ภาษาไทยอ่านได้จริง</p></div><span id="statusPill" class="status">พร้อม</span></header>
+      <header class="topbar"><div><h2>AI Review Prompt Builder</h2><p>1 ช็อต = 1 แถว มีทั้ง first frame prompt และ motion prompt ในไฟล์เดียว</p></div><span id="statusPill" class="status">พร้อม</span></header>
 
       <section class="panel input-panel">
         <h2>ข้อมูลสินค้า</h2>
         <div class="grid2">
-          <label>ชื่อสินค้า<input id="productName" value="เสื้อเชิ้ตผ้าซาตินทรงหลวม"></label>
+          <label>ชื่อสินค้า<input id="productName" value="ยาสีฟัน"></label>
           <label>หมวดสินค้า<select id="category"><option value="auto" selected>ให้ระบบวิเคราะห์อัตโนมัติ</option><option value="ช่องปาก / ยาสีฟัน">ช่องปาก / ยาสีฟัน</option><option value="แฟชั่น / เสื้อผ้า">แฟชั่น / เสื้อผ้า</option><option value="บิวตี้ / สกินแคร์">บิวตี้ / สกินแคร์</option><option value="อาหาร / เครื่องดื่ม">อาหาร / เครื่องดื่ม</option><option value="ของใช้ในบ้าน">ของใช้ในบ้าน</option><option value="สุขภาพ / ฟิตเนส">สุขภาพ / ฟิตเนส</option><option value="แกดเจ็ต / อุปกรณ์ไอที">แกดเจ็ต / อุปกรณ์ไอที</option><option value="คอร์ส / บริการ / ดิจิทัลโปรดักต์">คอร์ส / บริการ / ดิจิทัลโปรดักต์</option><option value="custom">กำหนดเอง</option></select></label>
         </div>
         <label id="customCategoryWrap" class="is-hidden">หมวดสินค้ากำหนดเอง<input id="customCategory" placeholder="เช่น ของใช้สัตว์เลี้ยง / ผลิตภัณฑ์แม่และเด็ก"></label>
         <label>รายละเอียด / สรรพคุณ / จุดเด่น<textarea id="productDetail">ยาสีฟันสมุนไพรธรรมชาติ ปากสะอาด ลมหายใจหอมสดชื่นและช่วยระงับอาการเสียวฟัน</textarea></label>
         <div class="grid2">
-          <label>ฉากหลัง<select id="scenePreset"><option value="auto" selected>ให้ระบบเลือกฉากที่เหมาะ</option><option>เคาน์เตอร์ห้องน้ำสะอาด</option><option>ซิงก์ล้างหน้าแสงเช้า</option><option>โต๊ะเครื่องแป้งแสงเช้า</option><option>โรงงานคนกำลังแพ็กของ</option><option>ฟิตเนส</option><option>สวนสาธารณะ</option><option>ห้องทำงานมินิมอล</option><option>ห้องครัวสะอาด</option><option>คาเฟ่พรีเมียม</option><option>สตูดิโอสินค้าแสงสะอาด</option><option value="custom">กำหนดเอง</option></select></label>
-          <label>แพลตฟอร์มปลายทาง<select id="profile"><option value="GPT Image" selected>GPT Image / ChatGPT</option><option value="FLOW">FLOW</option><option value="Grok">Grok</option><option value="Kling">Kling</option><option value="Runway">Runway</option></select></label>
+          <label>ฉากหลัง<select id="scenePreset"><option value="auto" selected>ให้ระบบเลือกฉากที่เหมาะ</option><option>เคาน์เตอร์ห้องน้ำสะอาด</option><option>ซิงก์ล้างหน้าแสงเช้า</option><option>โต๊ะเครื่องแป้งแสงเช้า</option><option>โรงงานกำลังแพ็กสินค้า</option><option>สายพานการผลิต</option><option>สินค้าวางบนไลน์ผลิตที่เสร็จแล้ว</option><option>โกดังคลังสินค้า</option><option>พื้นที่แพ็กออเดอร์</option><option>ฉากหลังพนักงานเดินไปมา</option><option>มุมถือสินค้าจากโรงงานแบบไม่เห็นหน้า</option><option>ฟิตเนส</option><option>สวนสาธารณะ</option><option>ห้องทำงานมินิมอล</option><option>ห้องครัวสะอาด</option><option>คาเฟ่พรีเมียม</option><option>สตูดิโอสินค้าแสงสะอาด</option><option value="custom">กำหนดเอง</option></select></label>
+          <label>Presenter Mode<select id="presenterMode"><option selected>เห็นหน้าเมื่อมี REF คน</option><option>ไม่เห็นหน้า / เห็นแค่มือ</option><option>บางช็อตเห็นคนได้</option></select></label>
         </div>
-        <label id="customSceneWrap" class="is-hidden">ฉากหลังกำหนดเอง<input id="customScene" placeholder="เช่น ห้องน้ำพรีเมียม มีแปรงสีฟัน แก้วน้ำ ใบสมุนไพร"></label>
+        <label id="customSceneWrap" class="is-hidden">ฉากหลังกำหนดเอง<input id="customScene" placeholder="เช่น โรงงานสะอาด มีสินค้าวางบนสายพานและพนักงานแพ็กของด้านหลัง"></label>
         <div class="grid3">
           <label>จำนวนช็อต<select id="shotCount"><option value="4" selected>4 ช็อต</option><option value="6">6 ช็อต</option><option value="8">8 ช็อต</option></select></label>
           <label>อัตราส่วน<select id="aspectRatio"><option value="9:16" selected>9:16 แนวตั้ง</option><option value="1:1">1:1</option><option value="16:9">16:9</option></select></label>
-          <label>สไตล์<select id="stylePreset"><option value="รีวิวจริงแบบ UGC มือถือ แสงธรรมชาติ" selected>UGC รีวิวจริง</option><option value="โฆษณาพรีเมียม แสงสตูดิโอสะอาด">Premium Commercial</option><option value="cinematic lifestyle ดูแพง มีมิติ">Cinematic Lifestyle</option><option value="TikTok Shop จังหวะไว เห็นสินค้าเร็ว">TikTok Shop Fast</option></select></label>
+          <label>สไตล์<select id="stylePreset"><option value="รีวิวจริงแบบ UGC มือถือ แสงธรรมชาติ" selected>UGC รีวิวจริง</option><option value="โฆษณาพรีเมียม แสงสตูดิโอสะอาด">Premium Commercial</option><option value="cinematic lifestyle ดูแพง มีมิติ">Cinematic Lifestyle</option><option value="TikTok Shop จังหวะไว เห็นสินค้าเร็ว">TikTok Shop Fast</option><option value="Factory presenter พรีเซนต์จากโรงงานจริง สินค้าอยู่ในมือหรือบนสายพาน">Factory Presenter</option><option value="Factory UGC บรรยากาศโรงงาน/โกดังจริง มีพนักงานหรือการแพ็กสินค้าเบา ๆ">Factory UGC</option></select></label>
+        </div>
+        <div class="grid2">
+          <label>Profile เจนภาพนิ่ง<select id="profileStill"><option value="GPT Image" selected>GPT Image / ChatGPT</option><option value="Grok">Grok</option><option value="Kling">Kling</option><option value="Runway">Runway</option><option value="Custom">Custom</option></select></label>
+          <label>Profile Motion<select id="profileMotion"><option value="FLOW" selected>FLOW</option><option value="Grok">Grok</option><option value="Kling">Kling</option><option value="Runway">Runway</option><option value="Custom">Custom</option></select></label>
         </div>
       </section>
 
       <section class="panel ref-panel">
         <h2>REF รูปภาพ</h2>
-        <p class="muted">ใช้ preview และใส่ชื่อไฟล์ใน package ส่วน path จริงสำหรับ Prompt Sender ให้ใส่ในช่อง Path ด้านล่าง หรือให้ Prompt Sender จัดการ mapping ในรอบถัดไป</p>
+        <p class="muted">รูปที่อัปโหลดในเว็บใช้ preview และเก็บชื่อไฟล์ใน Project Queue ส่วน path จริงให้ Add Product / Add Face ใน Prompt Sender</p>
         <div class="refgrid">
           <label class="upload">สินค้า<input id="productRefs" type="file" accept="image/*" multiple><div id="productPreview" class="preview"></div></label>
           <label class="upload">หน้า / นางแบบ<input id="faceRefs" type="file" accept="image/*" multiple><div id="facePreview" class="preview"></div></label>
@@ -73,17 +78,9 @@
         </details>
       </section>
 
-      <section class="panel analysis-panel">
-        <h2>ผลวิเคราะห์สินค้า</h2>
-        <div id="analysisBox" class="analysis-box"></div>
-      </section>
-
+      <section class="panel analysis-panel"><h2>ผลวิเคราะห์สินค้า</h2><div id="analysisBox" class="analysis-box"></div></section>
       <section id="shotList" class="shot-list"></section>
-
-      <section class="panel output-panel">
-        <h2>Caption / Hashtags</h2>
-        <div class="grid2"><label>Caption<textarea id="captionOutput"></textarea></label><label>Hashtags<textarea id="hashtagsOutput"></textarea></label></div>
-      </section>
+      <section class="panel output-panel"><h2>Caption / Hashtags</h2><div class="grid2"><label>Caption<textarea id="captionOutput"></textarea></label><label>Hashtags<textarea id="hashtagsOutput"></textarea></label></div></section>
     </section>
   </main>
 </body>
